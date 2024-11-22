@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh Sách Sinh Viên</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>Hệ Thống Quản Lý Sinh Viên</header>
+<div class="container">
+    <h1>Danh Sách Sinh Viên</h1>
+    <a href="{{ url_for('add_student') }}" class="btn">Thêm Sinh Viên</a>
+    <table>
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>MSSV</th>
+                <th>Họ và Tên</th>
+                <th>Ngày Sinh</th>
+                <th>Lớp</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ loop.index + start_index - 1 }}</td> <!-- Số thứ tự -->
+                <td>{{ student.mssv }}</td>
+                <td>{{ student.hoten }}</td>
+                <td>{{ student.ngaysinh }}</td>
+                <td>{{ student.lop }}</td>
+                <td>
+                    <!-- Nút Sửa -->
+                    <a href="{{ url_for('edit_student', mssv=student.mssv) }}">
+                        <button class="btn-edit">Sửa</button>
+                    </a>
+                
+                    <!-- Nút Xóa -->
+                    <form method="POST" action="{{ url_for('delete_student', mssv=student.mssv) }}" style="display:inline;">
+                        <button type="submit" class="btn-delete">Xóa</button>
+                    </form>
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
